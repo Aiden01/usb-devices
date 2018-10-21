@@ -19,4 +19,4 @@ export interface Device {
 	deviceDescriptor: DeviceDescriptor;
 }
 
-export function getDevices(): Array<Device>;
+export function getDevices(): Promise<Array<Device>>;
