@@ -1,0 +1,14 @@
+{
+  "name": "usb-devices",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/index.js",
+  "author": "Elian Gutierrez <eliangu3600103@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "neon-cli": "^0.2.0"
+  },
+  "scripts": {
+    "install": "neon build"
+  }
+}

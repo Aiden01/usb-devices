@@ -1,0 +1,18 @@
+[package]
+name = "usb-devices"
+version = "0.1.0"
+authors = ["Elian Gutierrez <eliangu3600103@gmail.com>"]
+license = "MIT"
+build = "build.rs"
+exclude = ["artifacts.json", "index.node"]
+
+[lib]
+name = "usb_devices"
+crate-type = ["dylib"]
+
+[build-dependencies]
+neon-build = "0.2.0"
+
+[dependencies]
+neon = "0.2.0"
+libusb = "0.3.0"
