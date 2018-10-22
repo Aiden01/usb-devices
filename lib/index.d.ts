@@ -17,6 +17,8 @@ export interface Device {
 	address: Number;
 	connectionSpeed: String;
 	deviceDescriptor: DeviceDescriptor;
+	busNumber: Number;
 }
 
 export function getDevices(): Promise<Array<Device>>;
+export function findByBusNumber(busNum: Number): Promise<Device?>;
