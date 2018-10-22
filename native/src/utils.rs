@@ -8,11 +8,8 @@ use neon::prelude::*;
 pub fn to_js_array(mut cx: FunctionContext, devices: Vec<Device>) -> Handle<JsArray> {
     // Initialize the array
     let devices_array = JsArray::new(&mut cx, devices.len() as u32);
-    let mut index: u32 = 0;
 
-    for device in devices.iter() {
-        index += 1;
-
+    for (index, device) in devices.iter().enumerate() {
         // Convert the struct to a JSObject
         let device_obj = cx.empty_object();
 
@@ -105,7 +102,9 @@ pub fn to_js_array(mut cx: FunctionContext, devices: Vec<Device>) -> Handle<JsAr
             .unwrap();
 
         // Push the object to the array
-        devices_array.set(&mut cx, index, device_obj).unwrap();
+        devices_array
+            .set(&mut cx, index as u32, device_obj)
+            .unwrap();
     }
     devices_array
 }
