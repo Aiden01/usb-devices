@@ -1,7 +1,9 @@
 pub mod device_descriptor;
-use self::device_descriptor::DeviceDescriptor;
+use self::device_descriptor::{DeviceDescriptor, SupportedUsbVersion};
 
-use libusb::{Context as LibUSBContext, DeviceDescriptor as LibUSBDeviceDescriptor, Speed};
+use libusb::{
+    Context as LibUSBContext, DeviceDescriptor as LibUSBDeviceDescriptor, Speed, Version,
+};
 
 #[derive(Debug)]
 pub struct Device {
@@ -83,8 +85,19 @@ fn get_device_descriptor(
                 vendor_id: descriptor.vendor_id(),
                 max_packet_size: descriptor.max_packet_size(),
                 num_configurations: descriptor.num_configurations(),
+                supported_usb_version: get_supported_usb_version(descriptor.usb_version()),
             })
         }
         Err(_) => None,
+    }
+}
+
+/**
+ * Returns the supported usb version of the device
+ */
+fn get_supported_usb_version(v: Version) -> SupportedUsbVersion {
+    SupportedUsbVersion {
+        minor_version: v.minor(),
+        major_version: v.major(),
     }
 }

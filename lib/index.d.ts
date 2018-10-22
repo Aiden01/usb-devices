@@ -1,7 +1,10 @@
-export interface UsbVersion {}
+export interface UsbVersion {
+	majorVersion: Number,
+	minorVersion: Number
+}
 
 export interface DeviceDescriptor {
-	usb_version: UsbVersion;
+	supportedUsbVersion: UsbVersion;
 	manufacturerStringIndex?: Number;
 	productStringIndex?: Number;
 	serialNumberStringIndex?: Number;

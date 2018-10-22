@@ -92,6 +92,21 @@ pub fn to_js_array(mut cx: FunctionContext, devices: Vec<Device>) -> Handle<JsAr
             descriptor_obj.set(&mut cx, "maxPacketSize", num).unwrap();
 
             // num_configurations: u8,
+            let num = cx.number(descriptor.num_configurations);
+            descriptor_obj
+                .set(&mut cx, "numConfigurations", num)
+                .unwrap();
+
+            // supported usb version
+            let s_usb_v_obj = cx.empty_object();
+            let minor_v = cx.number(descriptor.supported_usb_version.minor_version);
+            let major_v = cx.number(descriptor.supported_usb_version.major_version);
+
+            s_usb_v_obj.set(&mut cx, "minorVersion", minor_v);
+            s_usb_v_obj.set(&mut cx, "majorVersion", major_v);
+
+            descriptor_obj.set(&mut cx, "supportedUsbVersion", s_usb_v_obj);
+
             descriptor_obj
         } else {
             cx.empty_object()
