@@ -22,3 +22,4 @@ export interface Device {
 
 export function getDevices(): Promise<Array<Device>>;
 export function findByBusNumber(busNum: Number): Promise<Device?>;
+export function onAddress(address: Number): Promise<Device?>;

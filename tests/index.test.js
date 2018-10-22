@@ -15,3 +15,11 @@ test('Find by bus number', async t => {
 
     t.deepEqual(expectedDevice, device)
 })
+
+test('Get devices on a specific address', async t => {
+    const expectedDevice = (await usbDevices.getDevices()).filter(
+        device => device.address === 2
+    )
+    const device = await usbDevices.onAddress(2)
+    t.deepEqual(expectedDevice, device)
+})
