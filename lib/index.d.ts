@@ -1,6 +1,6 @@
 export interface UsbVersion {
-	majorVersion: Number,
-	minorVersion: Number
+	majorVersion: Number;
+	minorVersion: Number;
 }
 
 export interface DeviceDescriptor {
@@ -24,5 +24,6 @@ export interface Device {
 }
 
 export function getDevices(): Promise<Array<Device>>;
-export function findByBusNumber(busNum: Number): Promise<Device?>;
-export function onAddress(address: Number): Promise<Device?>;
+export function findByBusNumber(busNum: Number): Promise<Device>;
+export function onAddress(address: Number): Promise<Array<Device>>;
+export function support(usbVersion: Number): Promise<Array<Device>>;

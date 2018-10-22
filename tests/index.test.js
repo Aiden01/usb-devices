@@ -23,3 +23,16 @@ test('Get devices on a specific address', async t => {
     const device = await usbDevices.onAddress(2)
     t.deepEqual(expectedDevice, device)
 })
+
+test('Get devices that support a specific usb version', async t => {
+    const expectedDevices = (await usbDevices.getDevices()).filter(
+        ({
+            deviceDescriptor: {
+                supportedUsbVersion: { majorVersion, minorVersion },
+            },
+        }) => majorVersion <= 2 && minorVersion >= 2
+    )
+
+    const devices = await usbDevices.support(2)
+    t.deepEqual(devices, expectedDevices)
+})
