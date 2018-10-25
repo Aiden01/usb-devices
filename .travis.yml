@@ -3,11 +3,9 @@ node_js:
   - "10"
   - "8"
 
-matrix:
-  include:
-    rust: nightly
 
 before_install:
+  - curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
   - npm i -g neon-cli
 
 install:
