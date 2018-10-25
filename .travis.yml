@@ -6,6 +6,7 @@ node_js:
 
 before_install:
   - curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
+  - $PATH=$HOME/.cargo/bin:$PATH
   - npm i -g neon-cli
 
 install:
