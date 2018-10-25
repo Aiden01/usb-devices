@@ -7,6 +7,8 @@ node_js:
 before_install:
   - curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
   - PATH=$HOME/.cargo/bin:$PATH
+  - sudo apt update -y
+  - sudo apt install libusb-dev libusb-1.0 -y
   - npm i -g neon-cli
 
 install:
