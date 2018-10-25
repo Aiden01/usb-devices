@@ -10,8 +10,9 @@ before_install:
   - sudo apt update -y
   - sudo apt install libusb-dev libusb-1.0 -y
   - npm i -g neon-cli
+  - npm i
 
 install:
   neon build
 
-script: test
+script: npx jest
