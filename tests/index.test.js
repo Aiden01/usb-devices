@@ -1,19 +1,21 @@
-const { getDevices, findByBusNumber, support } = require('../lib')
-const { mockGetDevices } = require('./__mocks__')
+const usbDevices = require('../lib')
 
 test('Get usb devices', async () => {
-    const devices = await getDevices()
+    const devices = await usbDevices.getDevices()
     expect(Array.isArray(devices)).toBe(true)
 })
 
 test('Find device by is bus number', async () => {
+    // Mock values to be returned
     const mockDevices = [{ busNumber: 1 }, { busNumber: 2 }]
-    // mock function
-    jest.mock('../lib', () => {
-        getDevices: mockGetDevices(mockDevices)
-    })
-    const device = await findByBusNumber(1)
-    expect(device.busNumber).toBe(mockDevices[0].busNumber)
+
+    // Mock the function
+    usbDevices.getDevices = jest
+        .fn()
+        .mockReturnValue(Promise.resolve(mockDevices))
+
+    const device = await usbDevices.findByBusNumber(1)
+    expect(device).toBe(mockDevices[0])
 })
 
 test('Find devices that support a specific usb version', async () => {
@@ -39,20 +41,57 @@ test('Find devices that support a specific usb version', async () => {
             },
         },
     ]
-    // mock the function
-    jest.mock('../lib', () => {
-        getDevices: mockGetDevices(mockDevices)
-    })
 
-    const devices = (await support(2)).map(({ deviceDescriptor }) => {
-        deviceDescriptor
-    })
+    // mock the function
+    usbDevices.getDevices = jest
+        .fn()
+        .mockReturnValue(Promise.resolve(mockDevices))
+
+    const devices = await usbDevices.support(2)
 
     const expectedDevices = mockDevices.filter(
         ({ deviceDescriptor: { supportedUsbVersion } }) =>
-            supportedUsbVersion.majorVersion <= 2 &&
-            supportedUsbVersion.minorVersion >= 2
+            supportedUsbVersion.majorVersion >= 2 &&
+            supportedUsbVersion.minorVersion <= 2
     )
+
+    expect(devices).toEqual(expectedDevices)
+})
+
+test('Get devices with a specific vendorId', async () => {
+    const mockDevices = [
+        {
+            deviceDescriptor: {
+                vendorId: 1243,
+            },
+        },
+        {
+            deviceDescriptor: {
+                vendorId: 1213,
+            },
+        },
+        {
+            deviceDescriptor: {
+                vendorId: 1243,
+            },
+        },
+        {
+            deviceDescriptor: {
+                vendorId: 1343,
+            },
+        },
+    ]
+
+    // mock the function
+    usbDevices.getDevices = jest
+        .fn()
+        .mockReturnValue(Promise.resolve(mockDevices))
+
+    const expectedDevices = mockDevices.filter(
+        ({ deviceDescriptor: { vendorId } }) => vendorId === 1243
+    )
+
+    const devices = await usbDevices.vendor(1243)
 
     expect(devices).toEqual(expectedDevices)
 })
