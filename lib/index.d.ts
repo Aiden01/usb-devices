@@ -1,29 +1,30 @@
 export interface UsbVersion {
-	majorVersion: Number;
-	minorVersion: Number;
+	majorVersion: number;
+	minorVersion: number;
 }
 
 export interface DeviceDescriptor {
 	supportedUsbVersion: UsbVersion;
-	manufacturerStringIndex?: Number;
-	productStringIndex?: Number;
-	serialNumberStringIndex?: Number;
-	classCode: Number;
-	subClassCode: Number;
-	protocolCode: Number;
-	vendorId: Number;
-	maxPacketSize: Number;
+	manufacturerStringIndex?: number;
+	productStringIndex?: number;
+	serialNumberStringIndex?: number;
+	classCode: number;
+	subClassCode: number;
+	protocolCode: number;
+	vendorId: number;
+	maxPacketSize: number;
 }
 
 export interface Device {
-	name: String;
-	address: Number;
-	connectionSpeed: String;
+	name: string;
+	address: number;
+	connectionSpeed: string;
 	deviceDescriptor: DeviceDescriptor;
-	busNumber: Number;
+	busNumber: number;
 }
 
 export function getDevices(): Promise<Array<Device>>;
-export function findByBusNumber(busNum: Number): Promise<Device>;
-export function onAddress(address: Number): Promise<Array<Device>>;
-export function support(usbVersion: Number): Promise<Array<Device>>;
+export function findByBusnumber(busNum: number): Promise<Device>;
+export function onAddress(address: number): Promise<Array<Device>>;
+export function support(usbVersion: number): Promise<Array<Device>>;
+export function vendor(vendorID: number): Promise<Array<Device>>;
