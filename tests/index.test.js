@@ -1,7 +1,12 @@
 const usbDevices = require('../lib')
 
 test('Get usb devices', async () => {
+    usbDevices.getDevices = jest
+        .fn()
+        .mockReturnValue(Promise.resolve([{ busNumber: 1 }, { busNumber: 1 }]))
+
     const devices = await usbDevices.getDevices()
+
     expect(Array.isArray(devices)).toBe(true)
 })
 
