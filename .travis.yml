@@ -3,6 +3,10 @@ node_js:
   - "10"
   - "8"
 
+matrix:
+  include:
+    rust: nightly
+
 before_install:
   - npm i -g neon-cli
 
